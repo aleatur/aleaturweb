@@ -2,10 +2,10 @@
 
 ## Scope
 
-- Visual target: selected option 1 at `C:\Users\mater\.codex\generated_images\01a08856-2dfa-7873-8b08-443473b2dae3\exec-b987642a-cab1-4486-8dbb-82f3de26a5c3.png`, generated at `1024 × 1536`.
+- Visual target: selected option 1 from the local design exploration, generated at `1024 × 1536` and intentionally not committed.
 - Implementation: local Vite/React landing at `http://localhost:4173/`.
-- Latest implementation capture: `C:\Users\mater\AppData\Local\Temp\aleatur-design-qa\after-humanize-1024x1536.png`.
-- Combined comparison input: `C:\Users\mater\AppData\Local\Temp\aleatur-design-qa\qa-humanize-comparison.png`.
+- Latest implementation capture: temporary local QA artifact at `1024 × 1536`, intentionally not committed.
+- Combined comparison input: temporary local QA artifact, intentionally not committed.
 - Primary comparison state: `1024 × 1536`, device scale 1, page at scroll position 0, menu closed.
 - Additional responsive checks: `1440 × 900`, `768 × 1024` and `375 × 812`.
 
