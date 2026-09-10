@@ -4,6 +4,14 @@
 !.env.example
 !.env.*.example
 
+# Dependencies and build output
+/node_modules/
+/dist/
+
+# Tool caches
+/.vite/
+/.vercel/
+
 # OS metadata
 .DS_Store
 Thumbs.db
