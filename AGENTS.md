@@ -10,4 +10,8 @@ When implementing from a selected generated mock, treat that image as the source
 
 The normalized documentary image set for the 279 catalog products is the definitive image source. Each product is identified by its catalog ID and has an `ALE-####.avif` plus an `ALE-####.webp` derivative. Preserve those pairings during integration; do not rescrape, substitute, or regenerate product imagery unless the user explicitly requests it.
 
+## Catalog architecture
+
+Keep `/` as a concise editorial landing page and `/catalogo` as the complete discovery surface. The catalog uses search, category and brand filters plus explicit 24-product batches; do not return to rendering the complete inventory on the landing page. Google Sheets remains the master source, `CATEGORIA_WEB` is the only product grouping field, and `PRIORIDAD_WEB` controls landing-page highlights only.
+
 Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts/prepare-sites-build.mjs`, and `tests/sites-worker.test.mjs` intact so the same local prototype can be handed to Sites. Before a Sites handoff, run `npm run build` and `npm run test:sites`; the build must leave `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.

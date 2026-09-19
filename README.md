@@ -1,12 +1,12 @@
-# Aleatur landing
+# Aleatur web
 
 Base local para la presencia web de Aleatur, construida a partir del material disponible en la biblioteca documental del proyecto.
 
 ## Estado actual
 
-- Landing responsive con identidad visual oscura y editorial.
-- Catálogo de 279 productos derivado de la hoja maestra de Aleatur.
-- Navegación interna y contacto directo por WhatsApp.
+- Portada responsive con identidad visual oscura y editorial.
+- Catálogo independiente de 279 productos con búsqueda, categorías, marcas y carga progresiva.
+- Contacto general y consultas de producto por WhatsApp.
 - Sin carrito, pagos, backend ni administración de productos.
 - Preparada para evolucionar y publicarse en Vercel en una etapa posterior.
 
@@ -25,23 +25,36 @@ La aplicación queda disponible en la URL informada por Vite.
 
 ```bash
 npm run validate:catalog
+npm run test:catalog
 npm run build
 npm run test:sites
 ```
 
 ## Estructura principal
 
-- `src/App.jsx`: estructura y contenido de la landing.
+- `src/pages/`: portada, catálogo y estado de página inexistente.
+- `src/components/`: componentes compartidos de producto, contacto y layout.
 - `src/styles.css`: sistema visual y comportamiento responsive.
-- `src/data/catalog.generated.js`: instantánea desplegable de la pestaña `Web` de la hoja maestra.
-- `src/data/products.js`: productos publicados y resolución de imágenes.
-- `src/assets/products/`: pares AVIF/WebP identificados por el ID de catálogo.
+- `src/data/catalog.generated.json`: instantánea desplegable de la pestaña `Web` de la hoja maestra.
+- `src/data/products.js`: productos publicados, categorías, destacados y rutas de imágenes.
+- `public/products/`: pares AVIF/WebP identificados por el ID de catálogo.
 - `worker/`, `scripts/` y `tests/`: soporte del starter para hosting estático.
 
-El número y el mensaje de WhatsApp están centralizados al inicio de `src/App.jsx` para facilitar su confirmación antes del despliegue.
+El número y los mensajes de WhatsApp están centralizados en `src/site.js`.
+
+## Actualización del catálogo
+
+Google Sheets es la fuente maestra. Para actualizar la instantánea desplegable:
+
+1. Exportar la pestaña `Web` como CSV.
+2. Ejecutar `npm run sync:catalog -- <archivo.csv>`.
+3. Revisar el diff generado.
+4. Ejecutar las verificaciones indicadas arriba.
+
+El importador valida encabezados, IDs, publicación, prioridades, categorías y pares de imágenes antes de reemplazar la instantánea.
 
 ## Preparación para Vercel
 
-`vercel.json` fija el preset de Vite y sirve `dist/client`, que es el resultado estático generado por este starter. El proyecto usa Node.js 22 y no requiere variables de entorno en esta etapa.
+`vercel.json` fija el preset de Vite, sirve `dist/client` y resuelve `/catalogo` mediante la aplicación estática. El proyecto usa Node.js 22 y no requiere variables de entorno en esta etapa.
 
 El enlace con la cuenta de Vercel, la creación del primer preview y la asociación del subdominio se realizan después de confirmar el proyecto y el dominio de destino.

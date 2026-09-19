@@ -72,3 +72,7 @@ final result: passed
 ## Catalog integration — 2026-09-19
 
 The eight-product inventory described above is historical. The current implementation renders the 279 published products from the `Web` sheet snapshot and resolves one AVIF/WebP pair per catalog ID. Browser checks at `1440 × 900`, `390 × 844` and `320 × 812` confirmed complete catalog markup, zero broken images, no horizontal overflow and no application console errors.
+
+## Catalog architecture — 2026-09-19
+
+The landing now renders six products selected by `PRIORIDAD_WEB` instead of the complete inventory. `/catalogo` starts with 24 products and adds explicit 24-product batches, with accent-insensitive search, category filters, a category-aware brand selector and product-specific WhatsApp links. The existing dark editorial direction, typography, spacing language and image compositions remain the visual source of truth.
