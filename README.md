@@ -5,14 +5,14 @@ Base local para la presencia web de Aleatur, construida a partir del material di
 ## Estado actual
 
 - Landing responsive con identidad visual oscura y editorial.
-- Catálogo inicial de ocho perfumes de Afnan y Lattafa.
+- Catálogo de 279 productos derivado de la hoja maestra de Aleatur.
 - Navegación interna y contacto directo por WhatsApp.
 - Sin carrito, pagos, backend ni administración de productos.
 - Preparada para evolucionar y publicarse en Vercel en una etapa posterior.
 
 ## Desarrollo local
 
-Requiere Node.js 20 o posterior.
+Requiere Node.js 22.
 
 ```bash
 npm install
@@ -24,6 +24,7 @@ La aplicación queda disponible en la URL informada por Vite.
 ## Verificación
 
 ```bash
+npm run validate:catalog
 npm run build
 npm run test:sites
 ```
@@ -32,8 +33,9 @@ npm run test:sites
 
 - `src/App.jsx`: estructura y contenido de la landing.
 - `src/styles.css`: sistema visual y comportamiento responsive.
-- `src/data/products.js`: catálogo inicial y referencias a imágenes.
-- `src/assets/`: marca e imágenes optimizadas para web.
+- `src/data/catalog.generated.js`: instantánea desplegable de la pestaña `Web` de la hoja maestra.
+- `src/data/products.js`: productos publicados y resolución de imágenes.
+- `src/assets/products/`: pares AVIF/WebP identificados por el ID de catálogo.
 - `worker/`, `scripts/` y `tests/`: soporte del starter para hosting estático.
 
 El número y el mensaje de WhatsApp están centralizados al inicio de `src/App.jsx` para facilitar su confirmación antes del despliegue.

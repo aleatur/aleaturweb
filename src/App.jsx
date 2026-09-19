@@ -10,7 +10,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import emblem from "./assets/brand/aleatur-emblem.svg";
-import { products } from "./data/products.js";
+import { featuredProducts, products } from "./data/products.js";
 
 const contactNumber = "5491140302499";
 const contactMessage = encodeURIComponent(
@@ -41,7 +41,6 @@ function ProductImage({ product, priority = false }) {
         height="800"
         loading={priority ? "eager" : "lazy"}
         fetchPriority={priority ? "high" : "auto"}
-        style={{ objectPosition: product.imagePosition }}
       />
     </picture>
   );
@@ -49,7 +48,7 @@ function ProductImage({ product, priority = false }) {
 
 export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const featuredProduct = products[0];
+  const featuredProduct = featuredProducts[0] ?? products[0];
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -121,14 +120,14 @@ export function App() {
             <header className="section-heading">
               <div>
                 <p className="eyebrow">Lo que tenemos hoy</p>
-                <h2 id="collection-title">Una selección que recién empieza.</h2>
+                <h2 id="collection-title">Una selección para descubrir.</h2>
               </div>
-              <p>Empezamos con ocho perfumes de Afnan y Lattafa. Vamos a sumar nuevos aromas de a poco, cuidando cada elección.</p>
+              <p>Explorá el catálogo y escribinos si querés ayuda para encontrar un perfume que vaya con vos.</p>
             </header>
 
             <div className="product-grid">
               {products.map((product) => (
-                <article className="product-card" key={product.name}>
+                <article className="product-card" key={product.id}>
                   <div className="product-image">
                     <ProductImage product={product} />
                   </div>

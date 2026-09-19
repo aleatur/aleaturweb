@@ -68,3 +68,7 @@
 No unresolved P0, P1 or P2 findings remain in the tested landing flow.
 
 final result: passed
+
+## Catalog integration — 2026-09-19
+
+The eight-product inventory described above is historical. The current implementation renders the 279 published products from the `Web` sheet snapshot and resolves one AVIF/WebP pair per catalog ID. Browser checks at `1440 × 900`, `390 × 844` and `320 × 812` confirmed complete catalog markup, zero broken images, no horizontal overflow and no application console errors.
