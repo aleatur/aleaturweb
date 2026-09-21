@@ -38,6 +38,8 @@ dialog::backdrop { background: rgb(0 0 0 / .75); }
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; margin-top: 24px; align-items: start; }
 .detail-image { width: 100%; padding: 0; border: 0; background: var(--color-image); color: #353535; cursor: zoom-in; }
 .detail-image img { width: 100%; aspect-ratio: 1; height: auto; object-fit: contain; }
+.detail-image .gallery-picture { display: flex; justify-content: center; align-items: center; height: min(var(--detail-height), 65svh); padding: 8px; }
+.detail-image .gallery-picture img { width: auto; height: 100%; max-width: 100%; aspect-ratio: auto; }
 .detail-image > span { display: block; padding: 12px; font-size: .8125rem; }
 .detail-copy { display: grid; gap: 16px; padding-top: 16px; }
 .detail-copy > .eyebrow { display: inline-flex; min-height: 44px; align-items: center; }
@@ -54,6 +56,8 @@ dialog::backdrop { background: rgb(0 0 0 / .75); }
 .image-dialog { width: min(850px, calc(100% - 24px)); padding: 12px; }
 .image-dialog > button { display: block; margin-left: auto; margin-bottom: 12px; }
 .image-dialog img { max-height: 72dvh; width: 100%; height: auto; object-fit: contain; }
+.image-dialog .gallery-picture { display: flex; justify-content: center; align-items: center; height: min(var(--source-height), 72dvh); }
+.image-dialog .gallery-picture img { width: auto; max-width: min(100%, var(--source-width)); height: 100%; max-height: var(--source-height); aspect-ratio: auto; }
 
 .selection-page { padding-block: 48px 80px; min-height: calc(100svh - var(--header-height) - 124px); }
 .selection-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; }
@@ -69,6 +73,9 @@ dialog::backdrop { background: rgb(0 0 0 / .75); }
 .selection-item:first-child { padding-top: 0; }
 .selection-image { display: block; background: var(--color-image); }
 .selection-image img { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.selection-image { position: relative; aspect-ratio: 1; }
+.selection-image .gallery-picture { position: absolute; inset: 3px; display: flex; align-items: center; justify-content: center; }
+.selection-image .gallery-picture img { width: auto; height: 100%; max-width: 100%; aspect-ratio: auto; }
 .selection-item-copy > p { color: var(--color-text-muted); font-size: .8125rem; }
 .selection-item-copy h2 { font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
 .selection-item-copy h2 a { display: flex; min-height: 44px; align-items: center; }
