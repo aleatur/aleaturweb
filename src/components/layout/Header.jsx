@@ -1,7 +1,6 @@
-import { List, WhatsappLogo, X } from "@phosphor-icons/react";
+import { List, ShoppingBag, X } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { useSelection } from "../SelectionProvider.jsx";
-import { whatsappUrl } from "../../site.js";
 import { Brand } from "../Brand.jsx";
 
 const navigation = [
@@ -29,19 +28,6 @@ export function Header({ currentPath }) {
           <Brand />
         </a>
 
-        <a className="header-selection" href="/seleccion" aria-current={currentPath === "/seleccion" ? "page" : undefined}>Mi selección <span>{ids.length}</span></a>
-        <button
-          ref={toggle}
-          className="menu-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="main-navigation"
-          aria-label={menuOpen ? "Cerrar navegación" : "Abrir navegación"}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? <X size={24} aria-hidden="true" /> : <List size={24} aria-hidden="true" />}
-        </button>
-
         <nav
           id="main-navigation"
           className={`main-navigation${menuOpen ? " is-open" : ""}`}
@@ -57,22 +43,27 @@ export function Header({ currentPath }) {
               {item.label}
             </a>
           ))}
-          <a
-            className="button button-small navigation-cta"
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={closeMenu}
-          >
-            <WhatsappLogo size={20} aria-hidden="true" />
-            Escribinos
-          </a>
         </nav>
 
-        <a className="button button-outline header-cta" href={whatsappUrl} target="_blank" rel="noreferrer">
-          <WhatsappLogo size={21} aria-hidden="true" />
-          Hablar por WhatsApp
+        <a className="header-selection" href="/seleccion" aria-label={`Mi selección, ${ids.length} productos`} aria-current={currentPath === "/seleccion" ? "page" : undefined}>
+          <ShoppingBag size={21} aria-hidden="true" />
+          <span className="selection-label">Mi selección</span>
+          <span className="selection-count">{ids.length}</span>
         </a>
+        <button
+          ref={toggle}
+          className="menu-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="main-navigation"
+          aria-label={menuOpen ? "Cerrar navegación" : "Abrir navegación"}
+          onClick={() => {
+            setMenuOpen((open) => !open);
+            if (!menuOpen) requestAnimationFrame(() => document.querySelector("#main-navigation a")?.focus());
+          }}
+        >
+          {menuOpen ? <X size={24} aria-hidden="true" /> : <List size={24} aria-hidden="true" />}
+        </button>
       </div>
     </header>
   );

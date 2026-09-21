@@ -4,7 +4,7 @@ Sitio web de Aleatur, construido a partir del material disponible en la bibliote
 
 ## Estado actual
 
-- Portada responsive con identidad visual oscura y editorial.
+- Interfaz responsive minimalista, con identidad oscura y tipografía sans serif.
 - Catálogo con búsqueda, categorías, marcas, orden y páginas de 24 productos.
 - Fichas compartibles y selección guardada en el navegador.
 - Consultas individuales o conjuntas por WhatsApp.
@@ -67,3 +67,5 @@ La actualización es manual: editar Google Sheets no modifica por sí solo el si
 El repositorio está conectado a Vercel: los pull requests generan previews y los cambios publicados en `main` activan el despliegue de producción.
 
 La arquitectura de navegación, los campos editoriales opcionales y los recorridos de verificación están documentados en [Catalog experience](docs/catalog-experience.md).
+
+El diagnóstico y las próximas etapas para las fotografías están en [Image optimization plan](docs/image-optimization-plan.md).

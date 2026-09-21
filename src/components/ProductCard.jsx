@@ -15,17 +15,19 @@ export function ProductCard({ product, returnUrl = "/catalogo" }) {
         <p>{product.brand}</p>
         <h3><a href={href} onClick={() => rememberCatalog(product.id)}>{product.name}</a></h3>
       </div>
-      <SaveButton product={product} />
-      <a
-        className="product-action"
-        href={createWhatsAppUrl(product)}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Consultar por ${product.name} de ${product.brand}`}
-      >
-        <WhatsappLogo size={18} aria-hidden="true" />
-        Consultar
-      </a>
+      <div className="product-card-actions">
+        <a
+          className="product-action"
+          href={createWhatsAppUrl(product)}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Consultar por ${product.name} de ${product.brand}`}
+        >
+          <WhatsappLogo size={18} aria-hidden="true" />
+          Consultar
+        </a>
+        <SaveButton product={product} compact />
+      </div>
     </article>
   );
 }

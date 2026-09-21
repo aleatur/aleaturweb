@@ -32,21 +32,21 @@ export function HomePage() {
         <div className="shell hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">Perfumería y cuidado personal</p>
-            <h1 id="hero-title">Productos<span>que dejan</span>huella.</h1>
-            <div className="gold-rule" aria-hidden="true" />
-            <p className="hero-intro">Una selección para descubrir con calma. Si no sabés por dónde empezar, te ayudamos.</p>
+            <h1 id="hero-title">Encontrá algo que vaya con vos.</h1>
+            <p className="hero-intro">Perfumes y cuidado personal para todos los días.</p>
             <a className="button button-primary hero-button" href="/catalogo">
-              Explorar el catálogo
+              Ver catálogo
               <ArrowRight size={22} aria-hidden="true" />
             </a>
-            <p className="hero-note">Elegidos uno por uno</p>
           </div>
 
           <figure className="hero-media">
-            <ProductImage product={featuredProduct} priority />
+            <a href={`/producto/${featuredProduct.id}`} aria-label={`Ver ${featuredProduct.name} de ${featuredProduct.brand}`}>
+              <ProductImage product={featuredProduct} priority />
+            </a>
             <figcaption>
               <span>{featuredProduct.brand}</span>
-              <strong>{featuredProduct.name}</strong>
+              <a href={`/producto/${featuredProduct.id}`}>{featuredProduct.name}<ArrowRight size={18} aria-hidden="true" /></a>
             </figcaption>
           </figure>
         </div>
@@ -56,17 +56,14 @@ export function HomePage() {
         <div className="shell">
           <header className="section-heading compact-heading">
             <div>
-              <p className="eyebrow">Encontrá tu camino</p>
-              <h2 id="category-title">Explorá por categoría.</h2>
+              <h2 id="category-title">Explorá por categoría</h2>
             </div>
-            <p>Cuatro recorridos simples para llegar más rápido a lo que estás buscando.</p>
           </header>
           <div className="category-grid">
             {categories.map((category) => (
               <a className="category-card" href={`/catalogo?categoria=${category.code}`} key={category.code}>
-                <span>{category.count} productos</span>
                 <strong>{category.label}</strong>
-                <p>{category.description}</p>
+                <span>{category.count} productos</span>
                 <ArrowRight size={24} aria-hidden="true" />
               </a>
             ))}
@@ -78,19 +75,12 @@ export function HomePage() {
         <div className="shell">
           <header className="section-heading">
             <div>
-              <p className="eyebrow">Para empezar a mirar</p>
-              <h2 id="featured-title">Una selección destacada.</h2>
+              <h2 id="featured-title">Para descubrir</h2>
             </div>
-            <p>Estos productos abren el recorrido. El catálogo completo reúne toda la selección disponible.</p>
+            <a className="text-link" href="/catalogo">Ver todo<ArrowRight size={18} aria-hidden="true" /></a>
           </header>
           <div className="product-grid featured-grid">
             {homeFeatured.map((product) => <ProductCard product={product} key={product.id} />)}
-          </div>
-          <div className="section-action">
-            <a className="button button-outline" href="/catalogo">
-              Ver todos los productos
-              <ArrowRight size={22} aria-hidden="true" />
-            </a>
           </div>
         </div>
       </section>

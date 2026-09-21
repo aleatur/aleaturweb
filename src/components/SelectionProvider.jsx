@@ -46,7 +46,7 @@ export function SelectionProvider({ children }) {
           const recoveredId = notice.undoId;
           if (!currentIds.current.includes(notice.undoId)) save([...currentIds.current, notice.undoId]);
           setNotice({ text: "Producto recuperado.", undoId: null });
-          requestAnimationFrame(() => document.querySelector(`#producto-${recoveredId} .save-product`)?.focus());
+          requestAnimationFrame(() => document.querySelector(`#producto-${recoveredId} .selection-remove, #producto-${recoveredId} .save-product`)?.focus());
         }}>Deshacer</button>}
         <button type="button" aria-label="Cerrar aviso" onClick={() => setNotice(null)}>Cerrar</button>
       </div>}

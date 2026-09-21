@@ -4,6 +4,8 @@
 
 The home page is editorial: hero, category shortcuts, up to six highlights, purchase guidance and contact. The complete inventory lives at `/catalogo`.
 
+The visual system uses restrained dark neutrals, sans-serif headings, natural line breaks and subtle warm accents. The serif is reserved for the brand wordmark. Selection uses compact product rows, an unboxed empty state and one primary consultation action. Routine storage/account/reservation explanations belong in technical documentation; storage failures still receive contextual feedback. Image source improvements are covered in [the image plan](image-optimization-plan.md).
+
 Catalog results contain at most 24 products per page. URL parameters are `q`, `categoria`, `marca`, `orden` and `pagina`. Search is submitted with Enter or Buscar, so typing does not create history entries or repeatedly announce result counts. Search handles accents, reversed word order, compact names such as `9pm`, and catalog IDs. Exact names rank first under relevance sorting. Brand/name is the explicit default without a search. Invalid filters are discarded and stale page numbers are clamped. Changing filters resets page 1.
 
 Product routes use `/producto/ALE-####`. The `desde` parameter accepts only internal catalog or selection destinations. Catalog card navigation records the position and focused product in session storage, allowing the return link to restore the same result batch and position. Native history supports back/forward navigation.
