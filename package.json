@@ -14,7 +14,10 @@
     "validate:catalog": "node scripts/validate-catalog-assets.mjs",
     "test:catalog": "node --test tests/catalog-sync.test.mjs tests/home-page.test.mjs tests/catalog-query.test.mjs",
     "test:metadata": "node --test tests/product-pages.test.mjs",
-    "test:sites": "node --test tests/sites-worker.test.mjs"
+    "test:sites": "node --test tests/sites-worker.test.mjs",
+    "generate:images": "node scripts/generate-product-images.mjs",
+    "validate:images": "node scripts/validate-product-images.mjs",
+    "test:images": "node --test tests/product-images.test.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
@@ -24,5 +27,8 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "vite": "6.4.3"
+  },
+  "devDependencies": {
+    "sharp": "0.35.4"
   }
 }

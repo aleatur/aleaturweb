@@ -44,6 +44,12 @@ jobs:
       - name: Run catalog tests
         run: npm run test:catalog
 
+      - name: Validate responsive images
+        run: npm run validate:images
+
+      - name: Test image pipeline
+        run: npm run test:images
+
       - name: Build landing
         run: npm run build
 
