@@ -8,6 +8,7 @@ import "@fontsource/manrope/latin-500.css";
 import "@fontsource/manrope/latin-600.css";
 import { App } from "./App.jsx";
 import "./styles.css";
+import "./discovery.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

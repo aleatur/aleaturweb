@@ -1,159 +1,119 @@
-import { MagnifyingGlass, X } from "@phosphor-icons/react";
-import { useEffect, useMemo, useState } from "react";
+import { MagnifyingGlass, SlidersHorizontal, X } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import { ProductCard } from "../components/ProductCard.jsx";
-import { categories, normalizeForSearch, products } from "../data/products.js";
-
-const PAGE_SIZE = 24;
-const categoryCodes = new Set(categories.map((category) => category.code));
-
-function getInitialFilters() {
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("categoria") ?? "";
-  const normalizedCategory = categoryCodes.has(category) ? category : "";
-  const requestedBrand = params.get("marca") ?? "";
-  const brand = products.some((product) => (
-    (!normalizedCategory || product.category === normalizedCategory)
-    && product.brand === requestedBrand
-  )) ? requestedBrand : "";
-
-  return {
-    query: params.get("q") ?? "",
-    category: normalizedCategory,
-    brand,
-  };
-}
+import { categories, products } from "../data/products.js";
+import { catalogUrl, defaultFilters, PAGE_SIZE, queryCatalog, readFilters, suggestProducts } from "../data/catalog-query.js";
 
 export function CatalogPage() {
-  const initialFilters = getInitialFilters();
-  const [query, setQuery] = useState(initialFilters.query);
-  const [category, setCategory] = useState(initialFilters.category);
-  const [brand, setBrand] = useState(initialFilters.brand);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [filters, setFilters] = useState(() => readFilters(window.location.search, products));
+  const [draftQuery, setDraftQuery] = useState(filters.query);
+  const dialog = useRef(null);
+  const resultsHeading = useRef(null);
+  const result = queryCatalog(products, filters);
+  const current = { ...filters, page: result.page };
+  const url = catalogUrl(current);
+  const suggestions = result.total ? [] : suggestProducts(products, filters);
+  const brands = [...new Set(products.filter((item) => !filters.category || item.category === filters.category).map((item) => item.brand))];
 
-  const brands = useMemo(() => {
-    const values = products
-      .filter((product) => !category || product.category === category)
-      .map((product) => product.brand);
-    return [...new Set(values)].sort((left, right) => left.localeCompare(right, "es", { sensitivity: "base" }));
-  }, [category]);
-
+  useEffect(() => { history.replaceState(history.state, "", url); }, [url]);
   useEffect(() => {
-    setVisibleCount(PAGE_SIZE);
-    const params = new URLSearchParams();
-    if (query.trim()) params.set("q", query.trim());
-    if (category) params.set("categoria", category);
-    if (brand) params.set("marca", brand);
-    const search = params.toString();
-    window.history.replaceState({}, "", `/catalogo${search ? `?${search}` : ""}`);
-  }, [query, category, brand]);
+    const restore = () => {
+      const next = readFilters(location.search, products);
+      setFilters(next);
+      setDraftQuery(next.query);
+    };
+    window.addEventListener("popstate", restore);
+    let frame;
+    try {
+      const saved = JSON.parse(sessionStorage.getItem("aleatur.catalog.return"));
+      if (saved?.url === location.pathname + location.search) {
+        frame = requestAnimationFrame(() => {
+          document.getElementById(`producto-${saved.productId}`)?.querySelector("a")?.focus({ preventScroll: true });
+          window.scrollTo({ top: Number(saved.y) || 0, behavior: "instant" });
+          sessionStorage.removeItem("aleatur.catalog.return");
+        });
+      }
+    } catch { /* Browser history can still restore the position when storage is unavailable. */ }
+    return () => { window.removeEventListener("popstate", restore); cancelAnimationFrame(frame); };
+  }, []);
 
-  const results = useMemo(() => {
-    const normalizedQuery = normalizeForSearch(query);
-    return products.filter((product) => {
-      const matchesCategory = !category || product.category === category;
-      const matchesBrand = !brand || product.brand === brand;
-      const matchesQuery = !normalizedQuery || product.searchText.includes(normalizedQuery);
-      return matchesCategory && matchesBrand && matchesQuery;
+  function update(patch, focusResults = false) {
+    const next = { ...current, page: 1, ...patch };
+    next.page = queryCatalog(products, next).page;
+    const nextUrl = catalogUrl(next);
+    if (nextUrl !== location.pathname + location.search) history.pushState({}, "", nextUrl);
+    setFilters(next);
+    setDraftQuery(next.query);
+    if (focusResults) requestAnimationFrame(() => {
+      resultsHeading.current?.focus({ preventScroll: true });
+      resultsHeading.current?.scrollIntoView({ block: "start" });
     });
-  }, [query, category, brand]);
+  }
 
-  const visibleProducts = results.slice(0, visibleCount);
-  const hasFilters = Boolean(query || category || brand);
-  const clearFilters = () => {
-    setQuery("");
-    setCategory("");
-    setBrand("");
-  };
-  const selectCategory = (nextCategory) => {
-    setCategory(nextCategory);
-    setBrand("");
-  };
-
-  return (
-    <>
-      <section className="catalog-hero" aria-labelledby="catalog-title">
-        <div className="shell catalog-hero-grid">
-          <div>
-            <p className="eyebrow">Catálogo Aleatur</p>
-            <h1 id="catalog-title">Encontrá lo que estás buscando.</h1>
-          </div>
-          <p>Buscá por nombre, recorré las categorías o filtrá por marca. Cuando encuentres algo, consultanos directamente.</p>
+  function filterFields(prefix) {
+    return <>
+      <label className="discovery-field" htmlFor={`${prefix}-category`}>Categoría
+        <select id={`${prefix}-category`} value={filters.category} onChange={(event) => update({ category: event.target.value, brand: "" })}>
+          <option value="">Todas las categorías</option>
+          {categories.map((category) => <option value={category.code} key={category.code}>{category.label} ({category.count})</option>)}
+        </select>
+      </label>
+      <label className="discovery-field" htmlFor={`${prefix}-brand`}>Marca
+        <select id={`${prefix}-brand`} value={filters.brand} onChange={(event) => update({ brand: event.target.value })}>
+          <option value="">Todas las marcas</option>{brands.map((brand) => <option key={brand}>{brand}</option>)}
+        </select>
+      </label>
+      <label className="discovery-field" htmlFor={`${prefix}-order`}>Ordenar por
+        <select id={`${prefix}-order`} value={filters.order} onChange={(event) => update({ order: event.target.value })}>
+          <option value="marca">Marca y nombre</option><option value="nombre">Nombre A–Z</option><option value="relevancia">Relevancia</option>
+        </select>
+      </label>
+    </>;
+  }
+  const active = [
+    filters.query && { label: `Búsqueda: ${filters.query}`, patch: { query: "", order: "marca" } },
+    filters.category && { label: categories.find((item) => item.code === filters.category)?.label, patch: { category: "" } },
+    filters.brand && { label: filters.brand, patch: { brand: "" } },
+  ].filter(Boolean);
+  return <>
+    <section className="discovery-intro shell" aria-labelledby="catalog-title">
+      <p className="eyebrow">Catálogo Aleatur</p><h1 id="catalog-title">Encontrá tu próximo favorito.</h1>
+      <p>Explorá, guardá tus elegidos y consultanos por WhatsApp.</p>
+    </section>
+    <section className="catalog discovery-catalog" aria-label="Productos">
+      <div className="discovery-toolbar"><div className="shell">
+        <div className="discovery-search-row">
+          <form role="search" className="discovery-search" onSubmit={(event) => { event.preventDefault(); update({ query: draftQuery.trim(), order: draftQuery.trim() ? "relevancia" : "marca" }); }}>
+            <label className="sr-only" htmlFor="catalog-search">Buscar por producto, marca o código</label>
+            <MagnifyingGlass size={21} aria-hidden="true" />
+            <input id="catalog-search" type="search" maxLength={120} value={draftQuery} placeholder="Producto, marca o código" onChange={(event) => setDraftQuery(event.target.value)} />
+            {draftQuery && <button type="button" aria-label="Limpiar búsqueda" onClick={() => update({ query: "", order: "marca" })}><X size={18} aria-hidden="true" /></button>}
+            <button type="submit">Buscar</button>
+          </form>
+          <button className="mobile-filters" type="button" onClick={() => dialog.current.showModal()}><SlidersHorizontal size={20} aria-hidden="true" />Filtros{active.length ? ` (${active.length})` : ""}</button>
         </div>
-      </section>
-
-      <section className="catalog section" aria-label="Productos">
-        <div className="shell">
-          <div className="catalog-controls">
-            <div className="search-field">
-              <label htmlFor="catalog-search">Buscar productos</label>
-              <span className="input-shell">
-                <MagnifyingGlass size={21} aria-hidden="true" />
-                <input
-                  id="catalog-search"
-                  type="search"
-                  value={query}
-                  placeholder="Producto o marca"
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-                {query && (
-                  <button type="button" aria-label="Limpiar búsqueda" onClick={() => setQuery("")}>
-                    <X size={18} aria-hidden="true" />
-                  </button>
-                )}
-              </span>
-            </div>
-
-            <label className="brand-field">
-              <span>Marca</span>
-              <select value={brand} onChange={(event) => setBrand(event.target.value)}>
-                <option value="">Todas las marcas</option>
-                {brands.map((item) => <option value={item} key={item}>{item}</option>)}
-              </select>
-            </label>
-          </div>
-
-          <div className="category-filters" aria-label="Filtrar por categoría">
-            <button type="button" aria-pressed={!category} onClick={() => selectCategory("")}>Todos</button>
-            {categories.map((item) => (
-              <button
-                type="button"
-                aria-pressed={category === item.code}
-                onClick={() => selectCategory(item.code)}
-                key={item.code}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="catalog-summary" aria-live="polite">
-            <p>{results.length} {results.length === 1 ? "producto" : "productos"}</p>
-            {hasFilters && <button type="button" onClick={clearFilters}>Limpiar filtros</button>}
-          </div>
-
-          {results.length > 0 ? (
-            <>
-              <div className="product-grid catalog-grid">
-                {visibleProducts.map((product) => <ProductCard product={product} key={product.id} />)}
-              </div>
-              {visibleCount < results.length && (
-                <div className="load-more">
-                  <button className="button button-outline" type="button" onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}>
-                    Cargar más
-                    <span>{Math.min(PAGE_SIZE, results.length - visibleCount)}</span>
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="empty-state">
-              <p className="eyebrow">Sin resultados</p>
-              <h2>No encontramos productos con esos filtros.</h2>
-              <button className="button button-outline" type="button" onClick={clearFilters}>Ver todo el catálogo</button>
-            </div>
-          )}
-        </div>
-      </section>
-    </>
-  );
+        <div className="desktop-filters">{filterFields("desktop")}</div>
+      </div></div>
+      <dialog ref={dialog} className="filter-dialog" aria-labelledby="filters-title">
+        <div className="dialog-heading"><h2 id="filters-title">Filtrar y ordenar</h2><button type="button" aria-label="Cerrar filtros" onClick={() => dialog.current.close()}><X size={24} aria-hidden="true" /></button></div>
+        {filterFields("mobile")}
+        <button className="button button-primary" type="button" onClick={() => dialog.current.close()}>Ver {result.total} productos</button>
+        <button className="text-button" type="button" onClick={() => update(defaultFilters)}>Limpiar filtros</button>
+      </dialog>
+      <div className="shell">
+        {active.length > 0 && <div className="filter-chips" aria-label="Filtros activos">{active.map((item) => <button key={item.label} type="button" aria-label={`Quitar filtro ${item.label}`} onClick={() => update(item.patch)}>{item.label}<X size={16} aria-hidden="true" /></button>)}<button type="button" onClick={() => update(defaultFilters)}>Limpiar todo</button></div>}
+        <div className="discovery-summary"><h2 ref={resultsHeading} tabIndex={-1} id="catalog-results" aria-live="polite">{result.total ? `${(result.page - 1) * PAGE_SIZE + 1}–${Math.min(result.page * PAGE_SIZE, result.total)} de ${result.total} productos` : "Sin resultados"}</h2><span>Página {result.page} de {result.pages}</span></div>
+        {result.total > 0 ? <>
+          <div className="product-grid catalog-grid">{result.items.map((product) => <ProductCard key={product.id} product={product} returnUrl={url} />)}</div>
+          <nav className="catalog-pagination" aria-label="Páginas del catálogo">
+            <button type="button" disabled={result.page === 1} onClick={() => update({ page: result.page - 1 }, true)}>Anterior</button>
+            <label> Página <select aria-label="Ir a la página" value={result.page} onChange={(event) => update({ page: Number(event.target.value) }, true)}>{Array.from({ length: result.pages }, (_, index) => <option key={index} value={index + 1}>{index + 1}</option>)}</select> de {result.pages}</label>
+            <button type="button" disabled={result.page === result.pages} onClick={() => update({ page: result.page + 1 }, true)}>Siguiente</button>
+          </nav>
+        </> : <div className="empty-state"><h2>Probemos otra búsqueda.</h2><p>Revisá el nombre o quitá un filtro. También podés buscar por marca o por código.</p>
+          {suggestions.length > 0 && <div><p>¿Buscabas alguno de estos?</p><div className="filter-chips">{suggestions.map((product) => <button type="button" key={product.id} onClick={() => update({ query: product.name, order: "relevancia" })}>{product.name} · {product.brand}</button>)}</div></div>}
+          <div className="empty-actions">{filters.brand && <button className="button button-outline" type="button" onClick={() => update({ brand: "" })}>Quitar marca</button>}<button className="button button-primary" type="button" onClick={() => update(defaultFilters)}>Ver todo el catálogo</button></div></div>}
+      </div>
+    </section>
+  </>;
 }

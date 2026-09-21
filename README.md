@@ -5,8 +5,9 @@ Sitio web de Aleatur, construido a partir del material disponible en la bibliote
 ## Estado actual
 
 - Portada responsive con identidad visual oscura y editorial.
-- Catálogo independiente de 279 productos con búsqueda, categorías, marcas y carga progresiva.
-- Contacto general y consultas de producto por WhatsApp.
+- Catálogo con búsqueda, categorías, marcas, orden y páginas de 24 productos.
+- Fichas compartibles y selección guardada en el navegador.
+- Consultas individuales o conjuntas por WhatsApp.
 - Sin carrito, pagos, backend ni administración de productos.
 - Publicada en [aleatur.vercel.app](https://aleatur.vercel.app), con previews de los pull requests en Vercel.
 
@@ -29,13 +30,14 @@ npm run validate:catalog
 npm run test:catalog
 npm run build
 npm run test:sites
+npm run test:metadata
 ```
 
 ## Estructura principal
 
-- `src/pages/`: portada, catálogo y estado de página inexistente.
+- `src/pages/`: portada, catálogo, fichas, selección y página inexistente.
 - `src/components/`: componentes compartidos de producto, contacto y layout.
-- `src/styles.css`: sistema visual y comportamiento responsive.
+- `src/styles.css` y `src/discovery.css`: identidad visual y superficies de exploración.
 - `src/data/catalog.generated.json`: instantánea desplegable de la pestaña `Web` de la hoja maestra.
 - `src/data/products.js`: productos publicados, categorías, destacados y rutas de imágenes.
 - `public/products/`: pares AVIF/WebP identificados por el ID de catálogo.
@@ -60,6 +62,8 @@ La actualización es manual: editar Google Sheets no modifica por sí solo el si
 
 ## Publicación en Vercel
 
-`vercel.json` fija el preset de Vite, sirve `dist/client` y resuelve `/catalogo` mediante la aplicación estática. El proyecto usa Node.js 22 y no requiere variables de entorno en esta etapa.
+`vercel.json` fija el preset de Vite y sirve `dist/client` con URLs limpias. El proyecto usa Node.js 22 y no requiere variables de entorno en esta etapa.
 
 El repositorio está conectado a Vercel: los pull requests generan previews y los cambios publicados en `main` activan el despliegue de producción.
+
+La arquitectura de navegación, los campos editoriales opcionales y los recorridos de verificación están documentados en [Catalog experience](docs/catalog-experience.md).

@@ -52,27 +52,6 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="featured section" aria-labelledby="featured-title">
-        <div className="shell">
-          <header className="section-heading">
-            <div>
-              <p className="eyebrow">Para empezar a mirar</p>
-              <h2 id="featured-title">Una selección destacada.</h2>
-            </div>
-            <p>Estos productos abren el recorrido. El catálogo completo reúne toda la selección disponible.</p>
-          </header>
-          <div className="product-grid featured-grid">
-            {homeFeatured.map((product) => <ProductCard product={product} key={product.id} />)}
-          </div>
-          <div className="section-action">
-            <a className="button button-outline" href="/catalogo">
-              Ver todos los productos
-              <ArrowRight size={22} aria-hidden="true" />
-            </a>
-          </div>
-        </div>
-      </section>
-
       <section className="category-section section" aria-labelledby="category-title">
         <div className="shell">
           <header className="section-heading compact-heading">
@@ -91,6 +70,27 @@ export function HomePage() {
                 <ArrowRight size={24} aria-hidden="true" />
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="featured section" aria-labelledby="featured-title">
+        <div className="shell">
+          <header className="section-heading">
+            <div>
+              <p className="eyebrow">Para empezar a mirar</p>
+              <h2 id="featured-title">Una selección destacada.</h2>
+            </div>
+            <p>Estos productos abren el recorrido. El catálogo completo reúne toda la selección disponible.</p>
+          </header>
+          <div className="product-grid featured-grid">
+            {homeFeatured.map((product) => <ProductCard product={product} key={product.id} />)}
+          </div>
+          <div className="section-action">
+            <a className="button button-outline" href="/catalogo">
+              Ver todos los productos
+              <ArrowRight size={22} aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>

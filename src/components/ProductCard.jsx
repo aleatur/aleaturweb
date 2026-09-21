@@ -1,17 +1,21 @@
 import { WhatsappLogo } from "@phosphor-icons/react";
 import { createWhatsAppUrl } from "../site.js";
 import { ProductImage } from "./ProductImage.jsx";
+import { SaveButton } from "./SaveButton.jsx";
+import { rememberCatalog } from "../data/catalog-query.js";
 
-export function ProductCard({ product }) {
+export function ProductCard({ product, returnUrl = "/catalogo" }) {
+  const href = `/producto/${product.id}?desde=${encodeURIComponent(returnUrl)}`;
   return (
-    <article className="product-card">
-      <div className="product-image">
+    <article className="product-card" id={`producto-${product.id}`}>
+      <a className="product-image" href={href} aria-label={`Ver ${product.name} de ${product.brand}`} onClick={() => rememberCatalog(product.id)}>
         <ProductImage product={product} />
-      </div>
+      </a>
       <div className="product-meta">
         <p>{product.brand}</p>
-        <h3>{product.name}</h3>
+        <h3><a href={href} onClick={() => rememberCatalog(product.id)}>{product.name}</a></h3>
       </div>
+      <SaveButton product={product} />
       <a
         className="product-action"
         href={createWhatsAppUrl(product)}

@@ -49,3 +49,6 @@ jobs:
 
       - name: Run hosting tests
         run: npm run test:sites
+
+      - name: Validate public page metadata
+        run: npm run test:metadata

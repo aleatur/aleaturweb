@@ -1,5 +1,6 @@
 import { List, WhatsappLogo, X } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelection } from "../SelectionProvider.jsx";
 import { whatsappUrl } from "../../site.js";
 import { Brand } from "../Brand.jsx";
 
@@ -12,6 +13,13 @@ const navigation = [
 
 export function Header({ currentPath }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const toggle = useRef(null);
+  const { ids } = useSelection();
+  useEffect(() => {
+    const close = (event) => { if (event.key === "Escape" && menuOpen) { setMenuOpen(false); toggle.current?.focus(); } };
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [menuOpen]);
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -21,7 +29,9 @@ export function Header({ currentPath }) {
           <Brand />
         </a>
 
+        <a className="header-selection" href="/seleccion" aria-current={currentPath === "/seleccion" ? "page" : undefined}>Mi selección <span>{ids.length}</span></a>
         <button
+          ref={toggle}
           className="menu-toggle"
           type="button"
           aria-expanded={menuOpen}

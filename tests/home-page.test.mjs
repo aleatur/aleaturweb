@@ -44,7 +44,8 @@ for (const published of [true, false]) {
       assert.match(html, /https:\/\/wa\.me\//);
       if (published) {
         assert.match(html, /id="hero-title"/);
-        assert.equal((html.match(/class="product-card"/g) ?? []).length, 6);
+        assert.equal((html.match(/class="product-card"/g) ?? []).length, Math.min(6, catalog.filter((product) => product.priority !== null).length));
+        assert.ok(html.indexOf('id="category-title"') < html.indexOf('id="featured-title"'));
         assert.doesNotMatch(html, /id="empty-catalog-title"/);
       } else {
         assert.match(html, /Estamos preparando el catálogo/);

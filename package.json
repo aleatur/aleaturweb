@@ -8,11 +8,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prepare-sites-build.mjs",
+    "build": "vite build && node scripts/prepare-sites-build.mjs && node scripts/prepare-product-pages.mjs",
     "preview": "vite preview",
     "sync:catalog": "node scripts/sync-catalog.mjs",
     "validate:catalog": "node scripts/validate-catalog-assets.mjs",
-    "test:catalog": "node --test tests/catalog-sync.test.mjs tests/home-page.test.mjs",
+    "test:catalog": "node --test tests/catalog-sync.test.mjs tests/home-page.test.mjs tests/catalog-query.test.mjs",
+    "test:metadata": "node --test tests/product-pages.test.mjs",
     "test:sites": "node --test tests/sites-worker.test.mjs"
   },
   "dependencies": {

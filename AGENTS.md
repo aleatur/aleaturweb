@@ -12,6 +12,8 @@ The normalized documentary image set for the 279 catalog products is the definit
 
 ## Catalog architecture
 
-Keep `/` as a concise editorial landing page and `/catalogo` as the complete discovery surface. The catalog uses search, category and brand filters plus explicit 24-product batches; do not return to rendering the complete inventory on the landing page. Google Sheets remains the master source, `CATEGORIA_WEB` is the only product grouping field, and `PRIORIDAD_WEB` controls landing-page highlights only.
+Keep `/` as a concise editorial landing page and `/catalogo` as the complete discovery surface. The catalog uses search, category and brand filters plus explicit pages of at most 24 products; do not append the full inventory into one long page. Google Sheets remains the master source, `CATEGORIA_WEB` is the only product grouping field, and `PRIORIDAD_WEB` controls landing-page highlights only.
+
+Preserve the current sober dark/gold identity and editorial typography. Prioritize compact discovery, accessible mobile controls, recoverable navigation and two-column mobile product grids when readable. Product details use stable `/producto/ALE-####` routes; `/seleccion` stores IDs locally without accounts, payments or stock reservation. Never invent editorial attributes or availability. Optional product attributes must come from the catalog master source.
 
 Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts/prepare-sites-build.mjs`, and `tests/sites-worker.test.mjs` intact so the same local prototype can be handed to Sites. Before a Sites handoff, run `npm run build` and `npm run test:sites`; the build must leave `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
