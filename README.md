@@ -1,6 +1,6 @@
 # Aleatur web
 
-Base local para la presencia web de Aleatur, construida a partir del material disponible en la biblioteca documental del proyecto.
+Sitio web de Aleatur, construido a partir del material disponible en la biblioteca documental del proyecto.
 
 ## Estado actual
 
@@ -8,7 +8,7 @@ Base local para la presencia web de Aleatur, construida a partir del material di
 - Catálogo independiente de 279 productos con búsqueda, categorías, marcas y carga progresiva.
 - Contacto general y consultas de producto por WhatsApp.
 - Sin carrito, pagos, backend ni administración de productos.
-- Preparada para evolucionar y publicarse en Vercel en una etapa posterior.
+- Publicada en [aleatur.vercel.app](https://aleatur.vercel.app), con previews de los pull requests en Vercel.
 
 ## Desarrollo local
 
@@ -24,6 +24,7 @@ La aplicación queda disponible en la URL informada por Vite.
 ## Verificación
 
 ```bash
+npm audit --audit-level=high
 npm run validate:catalog
 npm run test:catalog
 npm run build
@@ -53,8 +54,12 @@ Google Sheets es la fuente maestra. Para actualizar la instantánea desplegable:
 
 El importador valida encabezados, IDs, publicación, prioridades, categorías y pares de imágenes antes de reemplazar la instantánea.
 
-## Preparación para Vercel
+Un CSV sin productos se rechaza y conserva la instantánea anterior. Una hoja con productos marcados como `PUBLICAR=NO` es válida; si ninguno está publicado, la portada muestra un estado vacío con acceso al contacto.
+
+La actualización es manual: editar Google Sheets no modifica por sí solo el sitio publicado. CI ejecuta las verificaciones anteriores en pushes y pull requests a `main`.
+
+## Publicación en Vercel
 
 `vercel.json` fija el preset de Vite, sirve `dist/client` y resuelve `/catalogo` mediante la aplicación estática. El proyecto usa Node.js 22 y no requiere variables de entorno en esta etapa.
 
-El enlace con la cuenta de Vercel, la creación del primer preview y la asociación del subdominio se realizan después de confirmar el proyecto y el dominio de destino.
+El repositorio está conectado a Vercel: los pull requests generan previews y los cambios publicados en `main` activan el despliegue de producción.

@@ -9,6 +9,23 @@ export function HomePage() {
   const featuredProduct = featuredProducts[0] ?? products[0];
   const homeFeatured = featuredProducts.slice(0, 6);
 
+  if (!featuredProduct) {
+    return (
+      <>
+        <section className="not-found section" id="inicio" aria-labelledby="empty-catalog-title">
+          <div className="shell">
+            <p className="eyebrow">Aleatur</p>
+            <h1 id="empty-catalog-title">Estamos preparando el catálogo.</h1>
+            <p>Mientras tanto, escribinos y te ayudamos a encontrar lo que buscás.</p>
+            <a className="button button-primary" href="#contacto">Contactanos</a>
+          </div>
+        </section>
+        <PurchaseSection />
+        <ContactSection />
+      </>
+    );
+  }
+
   return (
     <>
       <section className="hero" id="inicio" aria-labelledby="hero-title">

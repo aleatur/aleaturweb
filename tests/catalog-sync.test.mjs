@@ -54,3 +54,27 @@ test("CSV sync reproduces the committed catalog snapshot", async () => {
     await rm(temporaryDirectory, { recursive: true, force: true });
   }
 });
+
+test("CSV sync rejects an empty export without changing the existing snapshot", async () => {
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), "aleatur-empty-catalog-"));
+  const csvPath = path.join(temporaryDirectory, "web.csv");
+  const outputPath = path.join(temporaryDirectory, "catalog.json");
+  const previousSnapshot = await readFile(path.join(root, "src/data/catalog.generated.json"));
+
+  try {
+    await writeFile(outputPath, previousSnapshot);
+    for (const csv of ["", "ID,MARCA,PRODUCTO,PUBLICAR,PRIORIDAD_WEB,IMAGEN,CATEGORIA_WEB\r\n"]) {
+      await writeFile(csvPath, csv, "utf8");
+      const result = spawnSync(process.execPath, ["scripts/sync-catalog.mjs", csvPath, outputPath], {
+        cwd: root,
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 1, result.stderr || result.stdout);
+      assert.match(result.stderr, csv ? /must contain at least one product/ : /Unexpected CSV headers/);
+      assert.deepEqual(await readFile(outputPath), previousSnapshot);
+    }
+  } finally {
+    await rm(temporaryDirectory, { recursive: true, force: true });
+  }
+});

@@ -38,6 +38,12 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=high
 
+      - name: Validate catalog and images
+        run: npm run validate:catalog
+
+      - name: Run catalog tests
+        run: npm run test:catalog
+
       - name: Build landing
         run: npm run build
 

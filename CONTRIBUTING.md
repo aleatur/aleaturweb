@@ -17,11 +17,17 @@ Keep each change focused and preserve the current visual direction unless the sc
 
 ```bash
 npm audit --audit-level=high
+npm run validate:catalog
+npm run test:catalog
 npm run build
 npm run test:sites
 ```
 
 For visual changes, also check the layout at desktop, tablet, and narrow mobile widths. Do not commit credentials, local paths, screenshots, generated reports, caches, or temporary files.
+
+Catalog updates come from a CSV export of the master sheet's `Web` tab. Run `npm run sync:catalog -- <file.csv>`, review the generated diff, and run all checks above. Empty exports must fail without replacing the existing snapshot. When changing publication handling, also verify the home page with no published products.
+
+CI runs these checks on pushes and pull requests to `main`. Vercel creates pull request previews and deploys production when changes are pushed to `main`.
 
 ## Pull requests
 

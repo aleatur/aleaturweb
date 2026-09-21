@@ -55,6 +55,7 @@ function parseCsv(input) {
 const rows = parseCsv(readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, ""));
 const headers = rows.shift()?.map((value) => value.trim()) ?? [];
 if (headers.join("|") !== expectedHeaders.join("|")) throw new Error(`Unexpected CSV headers: ${headers.join(", ")}`);
+if (rows.length === 0) throw new Error("Catalog CSV must contain at least one product; the existing snapshot was not changed");
 
 const catalog = rows.map((row, index) => {
   const [id, brand, name, publishValue, priorityValue, image, category] = row.map((value) => value.trim());
