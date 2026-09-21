@@ -10,6 +10,8 @@ When implementing from a selected generated mock, treat that image as the source
 
 The normalized documentary image set for the 279 catalog products is the definitive image source. Each product is identified by its catalog ID and has an `ALE-####.avif` plus an `ALE-####.webp` derivative. Preserve those pairings during integration; do not rescrape, substitute, or regenerate product imagery unless the user explicitly requests it.
 
+The authorized responsive pipeline uses the checksum-verified historical sources recorded in `docs/images/sources.json`. Preserve the five previously verified source replacements. Generate each size directly from the selected source, retain the canonical 800 px pairs, and use 1200 px only where the reviewed source crop supports it. Keep complete packaging and sets, real colors and label details; never invent detail or apply automatic sharpening. Run `validate:images` and `test:images` after image changes. Follow `docs/image-optimization-plan.md` for generation, review and rollback.
+
 ## Catalog architecture
 
 Keep `/` as a concise editorial landing page and `/catalogo` as the complete discovery surface. The catalog uses search, category and brand filters plus explicit pages of at most 24 products; do not append the full inventory into one long page. Google Sheets remains the master source, `CATEGORIA_WEB` is the only product grouping field, and `PRIORIDAD_WEB` controls landing-page highlights only.
