@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { optionalFields, validateOptionalFields } from "../src/data/catalog-fields.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourcePath = process.argv[2] ? path.resolve(process.argv[2]) : null;
@@ -54,10 +55,13 @@ function parseCsv(input) {
 
 const rows = parseCsv(readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, ""));
 const headers = rows.shift()?.map((value) => value.trim()) ?? [];
-if (headers.join("|") !== expectedHeaders.join("|")) throw new Error(`Unexpected CSV headers: ${headers.join(", ")}`);
+if (headers.slice(0, expectedHeaders.length).join("|") !== expectedHeaders.join("|")
+  || headers.slice(expectedHeaders.length).some((header) => !Object.hasOwn(optionalFields, header))
+  || new Set(headers).size !== headers.length) throw new Error(`Unexpected CSV headers: ${headers.join(", ")}`);
 if (rows.length === 0) throw new Error("Catalog CSV must contain at least one product; the existing snapshot was not changed");
 
 const catalog = rows.map((row, index) => {
+  if (row.length !== headers.length) throw new Error(`Unexpected column count on CSV row ${index + 2}`);
   const [id, brand, name, publishValue, priorityValue, image, category] = row.map((value) => value.trim());
   const publishKey = publishValue.normalize("NFD").replace(/\p{Diacritic}/gu, "").toUpperCase();
   const priority = priorityValue === "" ? null : Number(priorityValue);
@@ -74,7 +78,13 @@ const catalog = rows.map((row, index) => {
     if (!existsSync(asset)) throw new Error(`Missing product image: ${asset}`);
   }
 
-  return { id, brand, name, publish: publishKey === "SI", priority, image, category };
+  const product = { id, brand, name, publish: publishKey === "SI", priority, image, category };
+  for (let column = expectedHeaders.length; column < headers.length; column += 1) {
+    const value = row[column].trim();
+    if (value) product[optionalFields[headers[column]].key] = value;
+  }
+  validateOptionalFields(product);
+  return product;
 });
 
 const ids = catalog.map((product) => product.id);

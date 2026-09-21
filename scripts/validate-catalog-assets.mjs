@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateOptionalFields } from "../src/data/catalog-fields.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalogPath = path.join(root, "src", "data", "catalog.generated.json");
@@ -22,6 +23,9 @@ if (!catalog.length || uniqueIds.size !== catalog.length) {
 }
 
 for (const product of catalog) {
+  if (!/^ALE-\d{4}$/.test(product.id)) throw new Error(`Invalid ID: ${product.id}`);
+  if (typeof product.publish !== "boolean") throw new Error(`Invalid publication flag for ${product.id}`);
+  validateOptionalFields(product);
   if (!product.brand || !product.name) throw new Error(`Missing product data for ${product.id}`);
   if (product.image !== product.id) throw new Error(`Catalog image key mismatch for ${product.id}: ${product.image}`);
   if (!allowedCategories.has(product.category)) throw new Error(`Invalid category for ${product.id}: ${product.category}`);
