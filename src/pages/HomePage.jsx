@@ -42,7 +42,7 @@ export function HomePage() {
 
           <figure className="hero-media">
             <a href={`/producto/${featuredProduct.id}`} aria-label={`Ver ${featuredProduct.name} de ${featuredProduct.brand}`}>
-              <ProductImage product={featuredProduct} priority />
+              <ProductImage product={featuredProduct} context="hero" priority />
             </a>
             <figcaption>
               <span>{featuredProduct.brand}</span>
@@ -80,7 +80,7 @@ export function HomePage() {
             <a className="text-link" href="/catalogo">Ver todo<ArrowRight size={18} aria-hidden="true" /></a>
           </header>
           <div className="product-grid featured-grid">
-            {homeFeatured.map((product) => <ProductCard product={product} key={product.id} />)}
+            {homeFeatured.map((product) => <ProductCard product={product} key={product.id} imageContext="featured" />)}
           </div>
         </div>
       </section>

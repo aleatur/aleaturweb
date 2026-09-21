@@ -47,6 +47,17 @@ for (const published of [true, false]) {
         assert.equal((html.match(/class="product-card"/g) ?? []).length, Math.min(6, catalog.filter((product) => product.priority !== null).length));
         assert.ok(html.indexOf('id="category-title"') < html.indexOf('id="featured-title"'));
         assert.doesNotMatch(html, /id="empty-catalog-title"/);
+        const { ProductImage } = await server.ssrLoadModule("/src/components/ProductImage.jsx");
+        const product = { ...catalog.find((item) => item.publish), avif: "/products/ALE-0001.avif", webp: "/products/ALE-0001.webp" };
+        const thumbnail = renderToStaticMarkup(createElement(ProductImage, { product, context: "selection" }));
+        assert.match(thumbnail, /responsive\/ALE-0001-160\.avif 160w/);
+        assert.match(thumbnail, /responsive\/ALE-0001-320\.webp 320w/);
+        assert.match(thumbnail, /loading="lazy"/);
+        assert.match(thumbnail, /sizes="auto, \(max-width: 820px\) 72px, 88px"/);
+        assert.match(thumbnail, /width="800" height="800"/);
+        const missingVariants = renderToStaticMarkup(createElement(ProductImage, { product: { ...product, image: "ALE-9999" } }));
+        assert.doesNotMatch(missingVariants, /responsive\/ALE-9999/);
+        assert.match(missingVariants, /\/products\/ALE-9999\.avif 800w/);
       } else {
         assert.match(html, /Estamos preparando el catálogo/);
         assert.match(html, /href="#contacto"/);

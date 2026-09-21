@@ -104,7 +104,7 @@ export function CatalogPage() {
         {active.length > 0 && <div className="filter-chips" aria-label="Filtros activos">{active.map((item) => <button key={item.label} type="button" aria-label={`Quitar filtro ${item.label}`} onClick={() => update(item.patch)}>{item.label}<X size={16} aria-hidden="true" /></button>)}<button type="button" onClick={() => update(defaultFilters)}>Limpiar todo</button></div>}
         <div className="discovery-summary"><h2 ref={resultsHeading} tabIndex={-1} id="catalog-results" aria-live="polite">{result.total ? `${(result.page - 1) * PAGE_SIZE + 1}–${Math.min(result.page * PAGE_SIZE, result.total)} de ${result.total} productos` : "Sin resultados"}</h2><span>Página {result.page} de {result.pages}</span></div>
         {result.total > 0 ? <>
-          <div className="product-grid catalog-grid">{result.items.map((product) => <ProductCard key={product.id} product={product} returnUrl={url} />)}</div>
+          <div className="product-grid catalog-grid">{result.items.map((product, index) => <ProductCard key={product.id} product={product} returnUrl={url} priority={index === 0} />)}</div>
           <nav className="catalog-pagination" aria-label="Páginas del catálogo">
             <button type="button" disabled={result.page === 1} onClick={() => update({ page: result.page - 1 }, true)}>Anterior</button>
             <label> Página <select aria-label="Ir a la página" value={result.page} onChange={(event) => update({ page: Number(event.target.value) }, true)}>{Array.from({ length: result.pages }, (_, index) => <option key={index} value={index + 1}>{index + 1}</option>)}</select> de {result.pages}</label>

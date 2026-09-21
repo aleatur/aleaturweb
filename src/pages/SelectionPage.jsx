@@ -32,7 +32,7 @@ export function SelectionPage() {
                 const href = `/producto/${product.id}?desde=%2Fseleccion`;
                 return (
                   <li className="selection-item" id={`producto-${product.id}`} key={product.id}>
-                    <a className="selection-image" href={href} aria-label={`Ver ${product.name} de ${product.brand}`}><ProductImage product={product} /></a>
+                    <a className="selection-image" href={href} aria-label={`Ver ${product.name} de ${product.brand}`}><ProductImage product={product} context="selection" /></a>
                     <div className="selection-item-copy"><p>{product.brand}</p><h2><a href={href}>{product.name}</a></h2></div>
                     <button className="selection-remove" type="button" aria-label={`Quitar ${product.name} de mi selección`} onClick={() => toggle(product.id, product.name)}><X size={20} aria-hidden="true" /></button>
                   </li>

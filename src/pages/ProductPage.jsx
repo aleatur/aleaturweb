@@ -11,6 +11,7 @@ export function ProductPage({ id }) {
   const zoom = useRef(null);
   const imageButton = useRef(null);
   const [shareStatus, setShareStatus] = useState("");
+  const [zoomLoaded, setZoomLoaded] = useState(false);
   if (!product) return <NotFoundPage />;
   const returnUrl = safeReturnUrl(new URLSearchParams(location.search).get("desde"));
   const category = categories.find((item) => item.code === product.category);
@@ -26,7 +27,7 @@ export function ProductPage({ id }) {
   return <section className="product-detail shell">
     <a className="back-link" href={returnUrl}>← Volver {returnUrl.startsWith("/seleccion") ? "a mi selección" : "al catálogo"}</a>
     <div className="detail-grid">
-      <button ref={imageButton} className="detail-image" type="button" onClick={() => zoom.current.showModal()} aria-label={`Ampliar imagen de ${product.name}`}><ProductImage product={product} priority /><span>Ampliar imagen</span></button>
+      <button ref={imageButton} className="detail-image" type="button" onClick={() => { setZoomLoaded(true); zoom.current.showModal(); }} aria-label={`Ampliar imagen de ${product.name}`}><ProductImage product={product} context="detail" priority /><span>Ampliar imagen</span></button>
       <div className="detail-copy">
         <a className="eyebrow" href={`/catalogo?categoria=${product.category}`}>{category?.label}</a>
         <p className="detail-brand">{product.brand}</p><h1>{product.name}</h1><p className="product-code">Código {product.id}</p>
@@ -38,6 +39,6 @@ export function ProductPage({ id }) {
         <p role="status">{shareStatus}</p>
       </div>
     </div>
-    <dialog className="image-dialog" ref={zoom} onClose={() => imageButton.current?.focus()} aria-label={`Imagen ampliada de ${product.name}`}><button className="text-button" type="button" onClick={() => zoom.current.close()}>Cerrar imagen</button><ProductImage product={product} priority /></dialog>
+    <dialog className="image-dialog" ref={zoom} onClose={() => imageButton.current?.focus()} aria-label={`Imagen ampliada de ${product.name}`}><button className="text-button" type="button" onClick={() => zoom.current.close()}>Cerrar imagen</button>{zoomLoaded && <ProductImage product={product} context="zoom" priority />}</dialog>
   </section>;
 }

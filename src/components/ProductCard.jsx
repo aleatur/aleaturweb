@@ -4,12 +4,12 @@ import { ProductImage } from "./ProductImage.jsx";
 import { SaveButton } from "./SaveButton.jsx";
 import { rememberCatalog } from "../data/catalog-query.js";
 
-export function ProductCard({ product, returnUrl = "/catalogo" }) {
+export function ProductCard({ product, returnUrl = "/catalogo", imageContext = "catalog", priority = false }) {
   const href = `/producto/${product.id}?desde=${encodeURIComponent(returnUrl)}`;
   return (
     <article className="product-card" id={`producto-${product.id}`}>
       <a className="product-image" href={href} aria-label={`Ver ${product.name} de ${product.brand}`} onClick={() => rememberCatalog(product.id)}>
-        <ProductImage product={product} />
+        <ProductImage product={product} context={imageContext} priority={priority} />
       </a>
       <div className="product-meta">
         <p>{product.brand}</p>
