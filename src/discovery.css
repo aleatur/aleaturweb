@@ -1,7 +1,7 @@
 /* Catalog controls, product details and selection. */
-.discovery-intro { padding-block: 40px 24px; }
-.discovery-intro h1, .selection-page h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -.035em; line-height: 1.25; }
-.discovery-intro p { margin-top: 12px; color: var(--color-text-muted); font-size: .875rem; }
+.discovery-intro { padding-block: 24px 16px; }
+.selection-page h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -.035em; line-height: 1.25; }
+.discovery-intro p { color: var(--color-text-muted); font-size: .875rem; }
 .discovery-catalog { padding-bottom: 64px; }
 .discovery-toolbar { position: sticky; top: var(--header-height); z-index: 20; padding-block: 16px; background: var(--color-background); border-bottom: 1px solid var(--color-border); }
 .discovery-search-row { display: flex; gap: 12px; }
@@ -94,7 +94,7 @@ dialog::backdrop { background: rgb(0 0 0 / .75); }
 .unavailable-products > div { display: flex; align-items: center; gap: 24px; margin-top: 12px; font-size: .875rem; }
 
 @media (max-width: 820px) {
-  .discovery-intro { padding-block: 32px 16px; }
+  .discovery-intro { padding-block: 20px 12px; }
   .desktop-filters { display: none; }
   .mobile-filters { display: inline-flex; }
   .discovery-summary h2 { scroll-margin-top: calc(var(--header-height) + 120px); }
