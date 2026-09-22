@@ -128,7 +128,7 @@ h1, h2, h3 { font-weight: 500; }
 .not-found h1 { max-width: 20ch; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; margin-block: 16px 32px; }
 .not-found p + a { margin-top: 24px; }
 
-@media (min-width: 821px) and (max-width: 1199px) {
+@media (min-width: 821px) and (max-width: 1312px) {
   .product-grid:not(.featured-grid) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 24px; }
   .product-grid:not(.featured-grid) .product-image { height: auto; aspect-ratio: 1; }
 }

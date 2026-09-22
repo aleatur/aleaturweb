@@ -21,7 +21,7 @@ export function ProductImage({ product, priority = false, context = "catalog" })
     // sizing therefore requests pixels for the bottle, not the surrounding tile.
     const fit = (width, height) => `min(${width}, calc((${height}) * ${ratio}))`;
     const slots = {
-      catalog: `(max-width: 560px) ${fit("calc((100vw - 44px) / 2 - 6px)", "(100vw - 44px) / 2 - 6px")}, (max-width: 820px) ${fit("calc((min(100vw - 40px, 720px) - 20px) / 2 - 6px)", "(min(100vw - 40px, 720px) - 20px) / 2 - 6px")}, (max-width: 1199px) ${fit("calc((100vw - 136px) / 4 - 6px)", "(100vw - 136px) / 4 - 6px")}, ${fit("calc((min(100vw - 64px, 1248px) - 48px) / 5 - 6px)", "246px")}`,
+      catalog: `(max-width: 560px) ${fit("calc((100vw - 44px) / 2 - 6px)", "(100vw - 44px) / 2 - 6px")}, (max-width: 820px) ${fit("calc((min(100vw - 40px, 720px) - 20px) / 2 - 6px)", "(min(100vw - 40px, 720px) - 20px) / 2 - 6px")}, (max-width: 1312px) ${fit("calc((100vw - 136px) / 4 - 6px)", "(100vw - 136px) / 4 - 6px")}, ${fit("calc((min(100vw - 64px, 1248px) - 48px) / 5 - 6px)", "246px")}`,
       featured: `(max-width: 560px) ${fit("calc((100vw - 44px) / 2 - 6px)", "(100vw - 44px) / 2 - 6px")}, (max-width: 820px) ${fit("calc((min(100vw - 40px, 720px) - 20px) / 2 - 6px)", "(min(100vw - 40px, 720px) - 20px) / 2 - 6px")}, ${fit("calc((min(100vw - 64px, 1248px) - 48px) / 3 - 6px)", "314px")}`,
       hero: `(max-width: 560px) ${fit("calc(100vw - 38px)", "min(354px, 100vw - 38px)")}, ${fit("min(460px, calc(100vw - 32px))", "394px")}`,
       detail: `${fit("min(588px, calc(100vw - 32px))", `min(${Math.min(500, maximumHeight)}px, 65vh) - 16px`)}`,
