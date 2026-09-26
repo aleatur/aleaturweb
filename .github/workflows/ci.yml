@@ -50,6 +50,9 @@ jobs:
       - name: Test image pipeline
         run: npm run test:images
 
+      - name: Validate framed gallery
+        run: npm run validate:gallery
+
       - name: Build landing
         run: npm run build
 

@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-21",
+  "accepted": [
+    {
+      "id": "ALE-0001",
+      "pageUrl": "https://afnan.com/products/9-am",
+      "assetUrl": "https://cdn.shopify.com/s/files/1/0655/0473/9421/files/9AM-Product-01_1705e829-06de-41a2-9e8d-559bdacd86f4.jpg?v=1727709048",
+      "retrievedAt": "2026-09-21",
+      "usagePermission": "No explicit redistribution license supplied; manufacturer product photography used to identify the advertised product.",
+      "match": "Same clear rectangular bottle, spherical gold cap, pale yellow liquid, white 9 AM face, AFNAN logo and 100 ml EDP inscription as documentary source. Distinct from blue Dive and pink Pour Femme.",
+      "presentation": "Manufacturer identifies 100 ml EDP. Existing image supports bottle appearance; catalog GTIN remains absent and no catalog attributes are added.",
+      "decision": "accepted",
+      "result": "higher-resolution-replacement",
+      "previousSha256": "a95ff172ecbcf1a23bb592422761dfeed1b08347aabadedbf859e54a0ef783ba",
+      "width": 1080,
+      "height": 1080,
+      "sha256": "f977efe53ced16a4ede3bfa2175a326b9140af6e3754b1720b4c8877f67dbf91"
+    },
+    {
+      "id": "ALE-0161",
+      "pageUrl": "https://lattafa.com/product/khamrah/",
+      "assetUrl": "https://lattafa.com/wp-content/uploads/2024/05/2-60.jpg",
+      "retrievedAt": "2026-09-21",
+      "usagePermission": "No explicit redistribution license supplied; manufacturer product photography used to identify the advertised product.",
+      "match": "Manufacturer name and existing documentary image match: bottle shape, cap facets, front label, logo and liquid color. Bottle-only photograph; no invented packaging or catalog attributes.",
+      "presentation": "Manufacturer page identifies 100 ml; catalog has no independently supplied GTIN or volume. No new catalog attribute is inferred.",
+      "decision": "accepted",
+      "previousSha256": "6d09bb65c4f35920718ffed61325a12beafb0f98fd6f2ecd713c6e63aaa81814",
+      "result": "higher-resolution-replacement",
+      "width": 2560,
+      "height": 2560,
+      "sha256": "dce2143317fedde91c31d717b047b9487615a211ba6bfa48c1beb4e339b30490"
+    },
+    {
+      "id": "ALE-0164",
+      "pageUrl": "https://lattafa.com/product/khamrah-waha/",
+      "assetUrl": "https://lattafa.com/wp-content/uploads/2026/05/Waha-Packshot-3-scaled.jpg",
+      "retrievedAt": "2026-09-21",
+      "usagePermission": "No explicit redistribution license supplied; manufacturer product photography used to identify the advertised product.",
+      "match": "Manufacturer name and existing documentary image match: bottle shape, cap facets, front label, logo and liquid color. Bottle-only photograph; no invented packaging or catalog attributes. Download is byte-identical to the archived source; this establishes provenance, not a resolution upgrade.",
+      "presentation": "Manufacturer page identifies 100 ml; catalog has no independently supplied GTIN or volume. No new catalog attribute is inferred.",
+      "decision": "accepted",
+      "previousSha256": "eba11310152cf4f1a822b60362dfd2f5cdc07b03f6aee5122b575b9ffa2faa30",
+      "result": "existing-source-confirmed",
+      "width": 2093,
+      "height": 2560,
+      "sha256": "eba11310152cf4f1a822b60362dfd2f5cdc07b03f6aee5122b575b9ffa2faa30"
+    },
+    {
+      "id": "ALE-0175",
+      "pageUrl": "https://lattafa.com/product/mashrabya/",
+      "assetUrl": "https://lattafa.com/wp-content/uploads/2024/12/Mashrabya-Bottle-scaled.jpg",
+      "retrievedAt": "2026-09-21",
+      "usagePermission": "No explicit redistribution license supplied; manufacturer product photography used to identify the advertised product.",
+      "match": "Matches existing documentary bottle: hexagonal gold cap, black embossed grid, six gold front name panels, small lower gold square and gold base. No extra packaging.",
+      "presentation": "No catalog GTIN or volume supplied. No catalog attributes changed.",
+      "decision": "accepted",
+      "previousSha256": "63600875185fa721750680c2596158c63783bd39f75aa7f9f5ee8cbf3c346c9d",
+      "result": "higher-resolution-replacement",
+      "width": 1033,
+      "height": 2560,
+      "sha256": "7e3390794a27a7eff38c78dedc25efb7262cd5ee01301eff5927a1c252a111f1"
+    }
+  ],
+  "rejectedOrRetained": [
+    {
+      "id": "ALE-0039",
+      "pageUrl": "https://armaf.com/products/club-de-nuit-intense-woman1",
+      "decision": "retain",
+      "reason": "Catalog name does not establish exact variant; this page is also a different 8.4 oz format."
+    },
+    {
+      "id": "ALE-0107",
+      "pageUrl": "https://karseell.eu/en/products/mascarilla-colageno-500ml",
+      "decision": "retain",
+      "reason": "Secondary candidate has different promotional artwork; source provenance insufficient for adoption."
+    },
+    {
+      "id": "ALE-0112",
+      "pageUrl": "https://us.tubbees.com/products/cotton-candy",
+      "decision": "reject-candidate",
+      "reason": "Yellow cap differs from the documentary pink cap; promotional composition."
+    },
+    {
+      "id": "ALE-0112",
+      "pageUrl": "https://www.tubbees.com/products/cotton-candy",
+      "decision": "retain",
+      "reason": "Pink cap matches but promotional background and 600px square do not provide a clean detail improvement."
+    },
+    {
+      "id": "ALE-0269",
+      "pageUrl": "https://www.victoriassecret.com.au/vs/body-care-bare-vanilla-fragrance-mist-250ml-26972016.html",
+      "assetUrl": "https://www.victoriassecret.com.au/on/demandware.static/-/Sites-beauty-master-catalog/default/dw8902c65e/large/112592038527_OM_F.jpg",
+      "width": 760,
+      "height": 1013,
+      "decision": "reject-candidate",
+      "reason": "Current label/packaging differs from documentary Bare Vanilla presentation."
+    },
+    {
+      "id": "ALE-0238",
+      "pageUrl": "https://pariscorner.ae/product/voux-violette-100ml/",
+      "assetUrl": "https://pariscorner.ae/wp-content/uploads/2024/12/VIOLETTE-01-1-scaled.jpg",
+      "width": 1978,
+      "height": 2560,
+      "decision": "retain",
+      "reason": "Same fragrance, but promotional artwork does not provide a clean catalog replacement."
+    },
+    {
+      "id": "ALE-0079",
+      "pageUrl": "https://www.armaf.ae/products/odyssey-wild-one-gold-edition",
+      "url": "https://cdn.shopify.com/s/files/1/0536/1523/1153/files/WildOne1_0d2192bf-b2bf-4c4d-bc6a-96ee8c48ed9e.jpg?v=1784547355",
+      "file": "ALE-0079-extra-0.png",
+      "width": 756,
+      "height": 756,
+      "decision": "retain",
+      "reason": "Exact stock packaging and volume cannot be established from the small documentary reference."
+    },
+    {
+      "id": "ALE-0079",
+      "pageUrl": "https://www.armaf.ae/products/odyssey-wild-one-gold-edition",
+      "url": "https://cdn.shopify.com/s/files/1/0536/1523/1153/files/WildOne3_f7a2f22a-d3a6-41ec-af8b-a9307cf0ad17.jpg?v=1784547355",
+      "file": "ALE-0079-extra-1.png",
+      "width": 756,
+      "height": 756,
+      "decision": "retain",
+      "reason": "Exact stock packaging and volume cannot be established from the small documentary reference."
+    },
+    {
+      "id": "ALE-0079",
+      "pageUrl": "https://www.armaf.ae/products/odyssey-wild-one-gold-edition",
+      "url": "https://cdn.shopify.com/s/files/1/0536/1523/1153/files/WildOne2_f6435981-6b95-46cf-8d6b-442019a211af.jpg?v=1784547355",
+      "file": "ALE-0079-extra-2.png",
+      "width": 756,
+      "height": 756,
+      "decision": "retain",
+      "reason": "Exact stock packaging and volume cannot be established from the small documentary reference."
+    },
+    {
+      "id": "ALE-0238",
+      "pageUrl": "https://www.pariscornerperfumes.com/products/voux-violette-emir",
+      "url": "https://cdn.shopify.com/s/files/1/0600/3163/1613/products/273766905_224919803105715_8952166087097946859_n.jpg?v=1655394570",
+      "file": "ALE-0238-extra-0.png",
+      "width": 1398,
+      "height": 1398,
+      "decision": "retain",
+      "reason": "Manufacturer image is promotional artwork, not a clean replacement."
+    },
+    {
+      "id": "ALE-0238",
+      "pageUrl": "https://www.pariscornerperfumes.com/products/voux-violette-emir",
+      "url": "https://cdn.shopify.com/s/files/1/0600/3163/1613/products/273689503_1416073888848953_2728651696836745652_n.jpg?v=1655394570",
+      "file": "ALE-0238-extra-1.png",
+      "width": 1440,
+      "height": 1800,
+      "decision": "retain",
+      "reason": "Manufacturer image is promotional artwork, not a clean replacement."
+    }
+  ],
+  "framingReview": [
+    {
+      "id": "ALE-0005",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-1.webp",
+      "crop": {
+        "left": 618,
+        "top": 307,
+        "width": 736,
+        "height": 1523
+      }
+    },
+    {
+      "id": "ALE-0011",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-1.webp",
+      "crop": {
+        "left": 727,
+        "top": 322,
+        "width": 1201,
+        "height": 1752
+      }
+    },
+    {
+      "id": "ALE-0021",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-1.webp",
+      "crop": {
+        "left": 224,
+        "top": 239,
+        "width": 615,
+        "height": 710
+      }
+    },
+    {
+      "id": "ALE-0152",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-4.webp",
+      "crop": {
+        "left": 278,
+        "top": 55,
+        "width": 698,
+        "height": 1134
+      }
+    },
+    {
+      "id": "ALE-0155",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-4.webp",
+      "crop": {
+        "left": 197,
+        "top": 74,
+        "width": 247,
+        "height": 492
+      }
+    },
+    {
+      "id": "ALE-0232",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-5.webp",
+      "crop": {
+        "left": 299,
+        "top": 225,
+        "width": 610,
+        "height": 793
+      }
+    },
+    {
+      "id": "ALE-0233",
+      "decision": "use-original-with-reviewed-crop",
+      "evidence": "gallery-review/batch-5.webp",
+      "crop": {
+        "left": 168,
+        "top": 40,
+        "width": 267,
+        "height": 521
+      }
+    }
+  ],
+  "unchangedBackgroundReview": [
+    "ALE-0102",
+    "ALE-0211",
+    "ALE-0259"
+  ],
+  "remainingReplacementQueue": [
+    {
+      "id": "ALE-0033",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    },
+    {
+      "id": "ALE-0079",
+      "reason": "Low detail visible in bottle and box. Retain only until an exact verified replacement is found."
+    },
+    {
+      "id": "ALE-0095",
+      "reason": "Pre-existing retailer watermark across original photograph. Do not erase it; obtain a verified clean source."
+    },
+    {
+      "id": "ALE-0098",
+      "reason": "Pre-existing retailer watermark across original photograph. Do not erase it; obtain a verified clean source."
+    },
+    {
+      "id": "ALE-0107",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    },
+    {
+      "id": "ALE-0109",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    },
+    {
+      "id": "ALE-0130",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    },
+    {
+      "id": "ALE-0219",
+      "reason": "Pre-existing watermark behind the bottle. Preserve until a clean exact replacement is verified."
+    },
+    {
+      "id": "ALE-0228",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    },
+    {
+      "id": "ALE-0239",
+      "reason": "Retain photographic background and complete artwork; review replacement evidence separately."
+    }
+  ],
+  "identityDecisions": [
+    {
+      "id": "ALE-0039",
+      "reason": "Retain current image. Confirm catalog variant before any replacement."
+    },
+    {
+      "id": "ALE-0260",
+      "reason": "Retain current image. Confirm catalog variant before any replacement."
+    }
+  ]
+}

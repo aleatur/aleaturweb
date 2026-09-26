@@ -77,7 +77,7 @@ export function CatalogPage() {
   ].filter(Boolean);
   return <>
     <section className="discovery-intro shell" aria-labelledby="catalog-title">
-      <h1 id="catalog-title">Catálogo</h1>
+      <h1 className="sr-only" id="catalog-title">Catálogo</h1>
       <p>Perfumes y cuidado personal.</p>
     </section>
     <section className="catalog discovery-catalog" aria-label="Productos">

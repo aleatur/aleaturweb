@@ -17,7 +17,9 @@
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "generate:images": "node scripts/generate-product-images.mjs",
     "validate:images": "node scripts/validate-product-images.mjs",
-    "test:images": "node --test tests/product-images.test.mjs"
+    "test:images": "node --test tests/product-images.test.mjs tests/gallery-images.test.mjs",
+    "generate:gallery": "node scripts/generate-gallery-images.mjs",
+    "validate:gallery": "node scripts/validate-gallery-images.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
