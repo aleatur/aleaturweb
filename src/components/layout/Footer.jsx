@@ -1,5 +1,6 @@
 import { InstagramLogo } from "@phosphor-icons/react";
 import { Brand } from "../Brand.jsx";
+import vntLogo from "../../assets/vnt/logo-signature-white.svg";
 
 export function Footer() {
   return (
@@ -20,6 +21,16 @@ export function Footer() {
             @aleatur.perfumeria
           </a>
         </div>
+        <a
+          className="vnt-signature"
+          href="https://www.instagram.com/vnt.agencia/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="created by VNT — Instagram (se abre en otra pestaña)"
+        >
+          <span lang="en">created by</span>
+          <img src={vntLogo} alt="" width="2150" height="589" loading="lazy" decoding="async" />
+        </a>
       </div>
     </footer>
   );

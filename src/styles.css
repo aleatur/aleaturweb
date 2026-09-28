@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Host Grotesk";
+  src: url("./assets/vnt/HostGrotesk-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   font-family: "Manrope", sans-serif;
@@ -116,10 +124,14 @@ h1, h2, h3 { font-weight: 500; }
 .contact-panel { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding-block: 40px; border-top: 1px solid var(--color-border); }
 .contact-copy > p { color: var(--color-text-muted); margin-top: 12px; }
 .site-footer { border-top: 1px solid var(--color-border); padding-block: 32px; }
-.footer-grid { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+.footer-grid { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 24px; }
 .footer-grid > p { font-size: .8125rem; color: var(--color-text-muted); }
 .footer-links { display: flex; gap: 24px; flex-wrap: wrap; color: var(--color-text-muted); font-size: .8125rem; }
 .footer-links a { display: inline-flex; align-items: center; min-height: 44px; gap: 8px; }
+.vnt-signature { display: inline-flex; min-height: 44px; align-items: center; justify-self: end; gap: 12px; color: var(--color-text-muted); font-family: "Host Grotesk", Arial, sans-serif; font-size: .6875rem; font-weight: 500; line-height: 1.4; letter-spacing: .06em; transition: color 180ms ease; }
+.vnt-signature img { width: auto; max-width: none; height: 28px; opacity: .8; transition: opacity 180ms ease; }
+.vnt-signature:hover, .vnt-signature:focus-visible { color: var(--color-text); }
+.vnt-signature:hover img, .vnt-signature:focus-visible img { opacity: 1; }
 .empty-state { display: grid; justify-items: start; align-content: center; gap: 20px; padding-block: 64px; }
 .empty-state h2 { max-width: 28ch; font-size: 1.5rem; line-height: 1.35; }
 .empty-state p { color: var(--color-text-muted); max-width: 52ch; }
@@ -137,9 +149,14 @@ h1, h2, h3 { font-weight: 500; }
   .main-navigation { gap: 20px; }
   .hero-grid { gap: 40px; }
   .footer-grid > p { display: none; }
+  .footer-grid { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .footer-links { justify-content: flex-end; }
   .category-grid { gap: 20px; }
 }
 @media (max-width: 820px) {
+  .footer-grid { grid-template-columns: minmax(0, 1fr) auto; }
+  .footer-links { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
+  .vnt-signature { grid-column: 2; grid-row: 1; }
   :root { --shell: min(100% - 40px, 720px); --section-space: 56px; --header-height: max(72px, 4.5rem); }
   .header-inner { gap: 16px; }
   .header-selection { order: 0; margin-left: auto; }
@@ -187,8 +204,10 @@ h1, h2, h3 { font-weight: 500; }
   .purchase-steps { grid-template-columns: 1fr; gap: 28px; }
   .purchase-steps li { grid-template-columns: 24px 1fr; gap: 16px; }
   .contact-panel { align-items: flex-start; flex-direction: column; padding-block: 32px; }
-  .footer-grid { align-items: flex-start; flex-direction: column; gap: 20px; }
+  .footer-grid { gap: 16px 12px; }
   .footer-links { gap: 8px 24px; }
+  .vnt-signature { gap: 8px; font-size: .625rem; }
+  .vnt-signature img { height: 20px; }
 }
 .product-image .gallery-picture { position: absolute; inset: 3px; width: auto; height: auto; display: flex; justify-content: center; align-items: center; }
 .product-image .gallery-picture img { width: auto; height: 100%; max-width: 100%; object-fit: contain; }

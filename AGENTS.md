@@ -14,6 +14,10 @@ The authorized responsive pipeline uses the checksum-verified historical sources
 
 The compact gallery uses `docs/images/gallery-sources.json` and source-sized, non-square derivatives in `public/products/gallery`. Prefer tighter empty-space framing over cutting or reconstructing a product. Preserve photographic light backgrounds for glass and reflections; use native transparency only where reviewed. Any authorized online replacement or regeneration must establish exact product identity; record provenance and keep ambiguous variants as explicit exceptions. Do not infer volume, concentration, packaging or GTIN into the catalog. Keep five columns on wide desktop, two on mobile, 44 px controls and complete product names. Zoom must respect the available source detail. Run `validate:gallery` as well as the canonical image checks; follow `docs/gallery-implementation.md`.
 
+## Footer credit
+
+Use the VNT signature with Host Grotesk, the official white logo, and a link to `https://www.instagram.com/vnt.agencia/`. Keep it compact and responsive without displacing Aleatur's contact links.
+
 ## Catalog architecture
 
 Keep `/` as a concise editorial landing page and `/catalogo` as the complete discovery surface. The catalog uses search, category and brand filters plus explicit pages of at most 24 products; do not append the full inventory into one long page. Google Sheets remains the master source, `CATEGORIA_WEB` is the only product grouping field, and `PRIORIDAD_WEB` controls landing-page highlights only.
