@@ -16,7 +16,7 @@ The compact gallery uses `docs/images/gallery-sources.json` and source-sized, no
 
 ## Footer credit
 
-Use the VNT signature with Host Grotesk, the official white logo, and a link to `https://www.instagram.com/vnt.agencia/`. Keep it compact and responsive without displacing Aleatur's contact links.
+Use the VNT signature with Host Grotesk, the official white logo, and a link to `https://www.instagram.com/vnt.agencia/`. Keep it compact and responsive without displacing Aleatur's contact links. Follow the [canonical signature guide](https://github.com/agencia-vnt/VNT/blob/main/docs/signature.md). Use text/logo height/gap of 11/28/12 px from 768 px and 10/20/8 px below 768 px; retain the 44 px minimum interaction height. Let the credit wrap to its own right-aligned row when enlarged text no longer fits beside the brand, with contact links underneath.
 
 ## Catalog architecture
 
