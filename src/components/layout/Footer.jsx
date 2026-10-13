@@ -23,10 +23,11 @@ export function Footer() {
         </div>
         <a
           className="vnt-signature"
-          href="https://www.instagram.com/vnt.agencia/"
+          href="https://vntagencia.com/r/aleatur"
+          data-vnt-signature="aleatur"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="created by VNT — Instagram (se abre en otra pestaña)"
+          aria-label="Sitio web de VNT Agencia (abre en una nueva pestaña)"
         >
           <span lang="en">created by</span>
           <img src={vntLogo} alt="" width="2150" height="589" loading="lazy" decoding="async" />
