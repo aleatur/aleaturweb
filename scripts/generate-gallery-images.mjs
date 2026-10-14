@@ -5,19 +5,24 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { sha256, PILOT_IDS } from "./lib/product-images.mjs";
 import { GALLERY_RECIPE, gallerySizes, galleryPath, renderGallery } from "./lib/gallery-images.mjs";
+import { isPathInside, resolveImageSource } from "./lib/image-source-paths.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
+const directoryFlags = new Set(["--source-dir", "--replacement-dir", "--acquired-dir", "--ids"]);
 for (let i = 0; i < args.length; i++) {
-  if (["--source-dir", "--replacement-dir", "--ids"].includes(args[i])) i++;
+  if (directoryFlags.has(args[i])) {
+    if (!args[i + 1] || args[i + 1].startsWith("--")) throw new Error(`Provide a value for ${args[i]}`);
+    i++;
+  }
   else if (args[i] !== "--pilot") throw new Error(`Unknown option: ${args[i]}`);
 }
 const directory = (flag) => {
   const index = args.indexOf(flag);
-  if (index < 0 || !args[index + 1] || args[index + 1].startsWith("--")) throw new Error(`Provide ${flag}`);
-  return path.resolve(args[index + 1]);
+  return index < 0 ? undefined : path.resolve(args[index + 1]);
 };
-const roots = { archive: directory("--source-dir"), verified: directory("--replacement-dir") };
+const roots = { archive: directory("--source-dir"), verified: directory("--replacement-dir"), acquired: directory("--acquired-dir") };
+if (!Object.values(roots).some(Boolean)) throw new Error("Provide at least one source directory; acquired originals use --acquired-dir.");
 const inventory = JSON.parse(await readFile(path.join(root, "docs/images/gallery-sources.json"), "utf8"));
 if (args.includes("--pilot") && args.includes("--ids")) throw new Error("Choose --pilot or --ids");
 const selectedIds = args.includes("--pilot") ? PILOT_IDS : args.includes("--ids") ? args[args.indexOf("--ids") + 1]?.split(",") : inventory.products.map((p) => p.id);
@@ -32,10 +37,10 @@ const stage = await mkdtemp(path.join(tmpdir(), "aleatur-gallery-build-"));
 try {
   const paths = new Map();
   for (const source of sources) {
-    const dir = roots[source.collection];
-    if (!dir) throw new Error(`Unknown collection: ${source.id}`);
-    const input = path.resolve(dir, source.file);
-    if (!input.startsWith(dir + path.sep)) throw new Error(`Source escapes directory: ${source.id}`);
+    const resolved = resolveImageSource(source, roots);
+    const input = await (await import("node:fs/promises")).realpath(resolved.inputPath);
+    const sourceRoot = await (await import("node:fs/promises")).realpath(resolved.root);
+    if (!isPathInside(sourceRoot, input)) throw new Error(`Source escapes directory through a link: ${source.id}`);
     if (sha256(await readFile(input)) !== source.sha256) throw new Error(`Source checksum mismatch: ${source.id}`);
     paths.set(source.id, input);
   }

@@ -5,16 +5,24 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { IMAGE_RECIPE, PILOT_IDS, prepareSource, renderVariant, sha256, variantPath } from "./lib/product-images.mjs";
+import { isPathInside, resolveImageSource } from "./lib/image-source-paths.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
+const directoryFlags = new Set(["--source-dir", "--replacement-dir", "--acquired-dir", "--ids"]);
 for (let index = 0; index < args.length; index++) {
-  if (["--source-dir", "--ids"].includes(args[index])) index++;
+  if (directoryFlags.has(args[index])) {
+    if (!args[index + 1] || args[index + 1].startsWith("--")) throw new Error(`Provide a value for ${args[index]}`);
+    index++;
+  }
   else if (args[index] !== "--pilot") throw new Error(`Unknown option: ${args[index]}`);
 }
-const sourceIndex = args.indexOf("--source-dir");
-if (sourceIndex < 0 || !args[sourceIndex + 1]) throw new Error("Provide --source-dir pointing to the archived, verified sources. Originals are read-only.");
-const sourceDir = path.resolve(args[sourceIndex + 1]);
+const option = (flag) => {
+  const index = args.indexOf(flag);
+  return index < 0 ? undefined : path.resolve(args[index + 1]);
+};
+const roots = { archive: option("--source-dir"), verified: option("--replacement-dir"), acquired: option("--acquired-dir") };
+if (!Object.values(roots).some(Boolean)) throw new Error("Provide at least one source directory; acquired originals use --acquired-dir.");
 const inventory = JSON.parse(await readFile(path.join(root, "docs/images/sources.json"), "utf8"));
 const idsIndex = args.indexOf("--ids");
 const ids = args.includes("--pilot") ? PILOT_IDS : idsIndex >= 0 ? args[idsIndex + 1]?.split(",") : inventory.products.map((p) => p.id);
@@ -29,10 +37,14 @@ const outputs = new Map(previous.products.map((p) => [p.id, p]));
 const stage = await mkdtemp(path.join(tmpdir(), "aleatur-image-build-"));
 try {
   // Verify the complete requested source batch before touching any published asset.
+  const sourcePaths = new Map();
   for (const id of ids) {
     const source = inventory.products.find((p) => p.id === id);
-    const inputPath = path.resolve(sourceDir, source.file);
-    if (!inputPath.startsWith(sourceDir + path.sep)) throw new Error(`Source escapes directory: ${id}`);
+    const resolved = resolveImageSource(source, roots);
+    const inputPath = await (await import("node:fs/promises")).realpath(resolved.inputPath);
+    const sourceRoot = await (await import("node:fs/promises")).realpath(resolved.root);
+    if (!isPathInside(sourceRoot, inputPath)) throw new Error(`Source escapes directory through a link: ${id}`);
+    sourcePaths.set(id, inputPath);
     if (sha256(await readFile(inputPath)) !== source.sha256) throw new Error(`Source checksum mismatch: ${id}`);
   }
   for (let offset = 0; offset < ids.length; offset += 50) {
@@ -42,7 +54,7 @@ try {
       while (next < batch.length) {
         const id = batch[next++];
         const source = inventory.products.find((p) => p.id === id);
-        const input = await readFile(path.join(sourceDir, source.file));
+        const input = await readFile(sourcePaths.get(id));
         if (sha256(input) !== source.sha256) throw new Error(`Source changed during generation: ${id}`);
         const { pixels, crop } = await prepareSource(input, { cleanBackground: source.cleanBackground });
         if (JSON.stringify(crop) !== JSON.stringify(source.crop)) throw new Error(`Source framing changed: ${id}; review inventory first`);
