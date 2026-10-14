@@ -5,6 +5,7 @@ const categoryDefinitions = [
   { code: "BODY_MISTS", label: "Body mists", description: "Brumas corporales livianas para usar todos los días." },
   { code: "INFANTIL", label: "Infantil", description: "Una selección divertida pensada para los más chicos." },
   { code: "CUIDADO_CAPILAR", label: "Cuidado capilar", description: "Productos para completar la rutina del cabello." },
+  { code: "GIFT SET", label: "Sets de regalo", description: "Conjuntos para regalar." },
 ];
 
 function getProductImageSources(imageKey) {
@@ -32,7 +33,7 @@ export const featuredProducts = products
 export const categories = categoryDefinitions.map((category) => ({
   ...category,
   count: products.filter((product) => product.category === category.code).length,
-}));
+})).filter((category) => category.count > 0);
 
 export function normalizeForSearch(value) {
   return value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es").trim();

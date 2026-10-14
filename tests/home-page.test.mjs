@@ -48,6 +48,10 @@ for (const published of [true, false]) {
         assert.equal((html.match(/class="product-card"/g) ?? []).length, Math.min(6, catalog.filter((product) => product.priority !== null).length));
         assert.ok(html.indexOf('id="category-title"') < html.indexOf('id="featured-title"'));
         assert.doesNotMatch(html, /id="empty-catalog-title"/);
+        const { categories } = await server.ssrLoadModule("/src/data/products.js");
+        assert.equal(categories.length, new Set(catalog.map((product) => product.category)).size);
+        assert.ok(categories.every((category) => category.count > 0));
+        assert.equal((html.match(/class="category-card"/g) ?? []).length, categories.length);
         const { ProductImage } = await server.ssrLoadModule("/src/components/ProductImage.jsx");
         const product = { ...catalog.find((item) => item.publish), avif: "/products/ALE-0001.avif", webp: "/products/ALE-0001.webp" };
         const thumbnail = renderToStaticMarkup(createElement(ProductImage, { product, context: "selection" }));

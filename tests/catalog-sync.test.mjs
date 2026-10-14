@@ -104,3 +104,20 @@ test("CSV sync rejects an empty export without changing the existing snapshot", 
     await rm(temporaryDirectory, { recursive: true, force: true });
   }
 });
+
+test("CSV sync preserves the master GIFT SET category code", async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), "aleatur-gift-set-"));
+  const source = path.join(directory, "source.csv");
+  const output = path.join(directory, "output.json");
+  const item = catalog[0];
+  const headers = ["ID", "MARCA", "PRODUCTO", "PUBLICAR", "PRIORIDAD_WEB", "IMAGEN", "CATEGORIA_WEB"];
+  const row = [item.id, item.brand, item.name, "SI", "", item.image, "GIFT SET"];
+  try {
+    await writeFile(source, [headers, row].map((values) => values.map(csvCell).join(",")).join("\n"));
+    const result = spawnSync(process.execPath, ["scripts/sync-catalog.mjs", source, output], { cwd: root, encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.equal(JSON.parse(await readFile(output, "utf8"))[0].category, "GIFT SET");
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});

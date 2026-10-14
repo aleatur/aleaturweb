@@ -11,7 +11,7 @@ const outputPath = process.argv[3]
   : path.join(root, "src", "data", "catalog.generated.json");
 const assetsPath = path.join(root, "public", "products");
 const expectedHeaders = ["ID", "MARCA", "PRODUCTO", "PUBLICAR", "PRIORIDAD_WEB", "IMAGEN", "CATEGORIA_WEB"];
-const allowedCategories = new Set(["PERFUMES", "BODY_MISTS", "INFANTIL", "CUIDADO_CAPILAR"]);
+const allowedCategories = new Set(["PERFUMES", "BODY_MISTS", "INFANTIL", "CUIDADO_CAPILAR", "GIFT SET"]);
 
 if (!sourcePath || !existsSync(sourcePath)) {
   throw new Error("Usage: npm run sync:catalog -- <exported-web-tab.csv> [output.json]");

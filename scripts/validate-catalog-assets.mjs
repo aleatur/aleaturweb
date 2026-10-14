@@ -7,7 +7,7 @@ import { validateOptionalFields } from "../src/data/catalog-fields.js";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalogPath = path.join(root, "src", "data", "catalog.generated.json");
 const assetsPath = path.join(root, "public", "products");
-const allowedCategories = new Set(["PERFUMES", "BODY_MISTS", "INFANTIL", "CUIDADO_CAPILAR"]);
+const allowedCategories = new Set(["PERFUMES", "BODY_MISTS", "INFANTIL", "CUIDADO_CAPILAR", "GIFT SET"]);
 
 if (!existsSync(catalogPath) || !existsSync(assetsPath)) {
   throw new Error("Catalog snapshot or product asset directory is missing");
